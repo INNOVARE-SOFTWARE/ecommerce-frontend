@@ -2,7 +2,7 @@ import { Routes, Route } from "react-router-dom"
 import  HomePage  from './pages/HomePage';
 import Footer from './components/Footer'
 import Header from './components/Header'
-import TermsPage from "./pages/TermsPage";
+import FaqPage from "./pages/FaqPage";
 
 function Application() {
     return (
@@ -10,7 +10,7 @@ function Application() {
             <Header></Header>
             <Routes>
                 <Route path="/" element={<HomePage />} />
-                <Route path="/terms" element={<TermsPage />} />
+                <Route path="/terms" element={<FaqPage />} />
             </Routes>
             <Footer></Footer>
         </div>
