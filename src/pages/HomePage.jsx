@@ -33,9 +33,10 @@ function HomePage() {
             <TextField
                 placeholder="Escriba su búsqueda..."
                 value={searchTerm}
+                variant="standard"
                 onChange={(e) => setSearchTerm(e.target.value)}
             ></TextField>
-            <Button onClick={handleFilter} variant="outlined" startIcon={<SearchIcon />}> Buscar </Button>
+            <Button variant="text" onClick={handleFilter} startIcon={<SearchIcon />}> Buscar </Button>
             {load ?
                 <Loader /> :
                 <Grid container spacing={2}>
@@ -45,7 +46,7 @@ function HomePage() {
                         </Grid>
                     ))}
                 </Grid>}
-            <Divider style={{ marginBottom: 100 }}></Divider>
+            <div style={{ marginBottom: 100 }}></div>
         </Container>
     );
 }
