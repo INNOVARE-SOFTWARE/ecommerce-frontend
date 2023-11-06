@@ -12,15 +12,18 @@ const Header = () => {
                         Tienda Deportiva FULLSTACK
                     </Typography>
                     <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
-                        <Button
-                            sx={{ my: 2, marginRight: 3, color: 'white', display: 'block', border: 2 }}>
-                            <Link to='/'>Home</Link>
-                        </Button>
-
-                        <Button
-                            sx={{ my: 2, marginRight: 3, color: 'white', display: 'block', border: 2 }}>
-                            <Link to='/terms'>Términos</Link>
-                        </Button>
+                        <Link to='/'>
+                            <Button
+                                sx={{ my: 2, marginRight: 3, color: 'white', display: 'block', border: 2 }}>
+                                Home
+                            </Button>
+                        </Link>
+                        <Link to='/terms'>
+                            <Button
+                                sx={{ my: 2, marginRight: 3, color: 'white', display: 'block', border: 2 }}>
+                                Términos
+                            </Button>
+                        </Link>
 
                         <Button
                             sx={{ my: 2, marginRight: 3, color: 'white', display: 'block', border: 2 }}>
