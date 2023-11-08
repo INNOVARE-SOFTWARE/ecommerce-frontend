@@ -21,7 +21,7 @@ const Header = () => {
                         <Link to='/terms'>
                             <Button
                                 sx={{ my: 2, marginRight: 3, color: 'white', display: 'block', border: 2 }}>
-                                Términos
+                                FAQs
                             </Button>
                         </Link>
 
