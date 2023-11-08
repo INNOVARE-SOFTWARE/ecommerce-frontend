@@ -24,11 +24,12 @@ const Header = () => {
                                 FAQs
                             </Button>
                         </Link>
-
-                        <Button
-                            sx={{ my: 2, marginRight: 3, color: 'white', display: 'block', border: 2 }}>
-                            Contacto
-                        </Button>
+                        <Link to='/contact'>
+                            <Button
+                                sx={{ my: 2, marginRight: 3, color: 'white', display: 'block', border: 2 }}>
+                                Contacto
+                            </Button>
+                        </Link>
                         <Button
                             sx={{ my: 2, color: 'white', display: 'block', border: 2 }}>
                             Acerca de

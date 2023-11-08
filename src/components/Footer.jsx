@@ -1,5 +1,6 @@
 import React from 'react';
 import { Paper } from "@mui/material";
+import Social from './Social'
 
 function Footer(props) {
     return (
@@ -8,9 +9,10 @@ function Footer(props) {
             position: 'fixed',
             bottom: 0,
             padding: 2,
-            width: '100%'
+            width: '100%',
+            textAlign:'center'
         }} square variant="outlined">
-            FOOTER
+           <Social></Social>
         </Paper>
     );
 }
