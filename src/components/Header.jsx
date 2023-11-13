@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from "react-router-dom";
+import Cart from '../components/Cart'
 
 import { AppBar, Divider, IconButton, Toolbar, Button, Typography, Box } from "@mui/material";
 
@@ -30,10 +31,9 @@ const Header = () => {
                                 Contacto
                             </Button>
                         </Link>
-                        <Button
-                            sx={{ my: 2, color: 'white', display: 'block', border: 2 }}>
-                            Acerca de
-                        </Button>
+                        <span style={{ marginTop: 15 }}>
+                            <Cart></Cart>
+                        </span>
                     </Box>
                     <IconButton color="inherit" aria-label="Admin Access">
                         <Typography variant="body1" sx={{ pr: 1 }}>
