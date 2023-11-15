@@ -6,6 +6,9 @@ import FaqPage from "./pages/FaqPage";
 import ContactPage from "./pages/ContactPage";
 import { CartProvider } from "./context/CartContext";
 
+import HomePagePanel from './pages/panel/PanelPage'
+
+
 function Application() {
     return (
         <div>
@@ -15,6 +18,7 @@ function Application() {
                     <Route path="/" element={<HomePage />} />
                     <Route path="/terms" element={<FaqPage />} />
                     <Route path="/contact" element={<ContactPage />} />
+                    <Route path="/panel" element={<HomePagePanel />} />
                 </Routes>
                 <Footer></Footer>
             </CartProvider>

@@ -37,7 +37,9 @@ const Header = () => {
                     </Box>
                     <IconButton color="inherit" aria-label="Admin Access">
                         <Typography variant="body1" sx={{ pr: 1 }}>
-                            Acceso Admin
+                            <Link to='/panel'>
+                                Acceso Admin
+                            </Link>
                         </Typography>
                     </IconButton>
                 </Toolbar>
