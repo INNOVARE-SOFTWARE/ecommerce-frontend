@@ -5,3 +5,8 @@ const BASE_URL = 'http://localhost:3001/api';
 export const getAllProducts = (searchTerm) => {
     return axios.get(`${BASE_URL}/products?name=${searchTerm || ''}`);
 };
+
+export const createProduct = (product) => {
+    return axios.post(`${BASE_URL}/products`, product);
+};
+
