@@ -30,7 +30,7 @@ function HomePagePanel() {
 
     return (
         <Container>
-            <FormProduct></FormProduct>
+            <FormProduct fetchData={fetchData}></FormProduct>
             <br/>
             <TableContainer component={Paper}>
                 <Table sx={{ minWidth: 650 }} aria-label="simple table">

@@ -7,12 +7,14 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import { TextField, AppBar, Container, IconButton, Toolbar, Typography } from '@mui/material';
+import { createProduct } from '../api/products.api';
 
 function FormProduct(props) {
     const [open, setOpen] = useState(false);
     const [product, setProduct] = useState({
         name: '',
         catalog: '',
+        image: '',
         description: '',
         price: 0,
         stock: 0
@@ -27,8 +29,18 @@ function FormProduct(props) {
     };
 
 
-    const handleSubmit = () => {
-        //setOpen(false);
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        createProduct(product).then((response) => {
+            if (response.data) {
+                setOpen(false);
+                props.fetchData()
+            }
+        }).catch((error) => {
+            alert(error);
+            setOpen(false);
+        });  
+      
     }
 
 
@@ -71,6 +83,14 @@ function FormProduct(props) {
                             value={product.description}
                             onChange={handleChange}
                             required
+                        />
+                        <TextField fullWidth
+                            label="Imagen URL"
+                            margin="normal"
+                            name="image"
+                            value={product.image}
+                            onChange={handleChange}
+
                         />
                         <TextField fullWidth
                             label="Precio"
