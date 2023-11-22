@@ -11,6 +11,7 @@ import PrivateRoute from "./components/PrivateRoute";
 import { AuthProvider } from "./context/AuthContext";
 
 function Application() {
+    
     return (
         <div>
             <CartProvider>

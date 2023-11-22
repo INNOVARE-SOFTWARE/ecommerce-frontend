@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useEffect} from 'react';
 import { Link, useNavigate } from "react-router-dom";
 import Cart from '../components/Cart'
 
@@ -7,8 +7,16 @@ import { useAuth } from '../context/AuthContext';
 
 const Header = () => {
 
-    const { isUserLogged, logout } = useAuth();
+    const { isUserLogged, logout, login } = useAuth();
     const navigate = useNavigate();
+
+    //Para control de login
+    useEffect(() => {
+        const isAuthenticated = localStorage.getItem('token');
+        if (isAuthenticated) {
+            login(isAuthenticated)
+        }
+    },[]);
 
     const handleLogout = () => {
         logout();
