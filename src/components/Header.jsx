@@ -1,10 +1,20 @@
 import React from 'react';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Cart from '../components/Cart'
 
 import { AppBar, Divider, IconButton, Toolbar, Button, Typography, Box } from "@mui/material";
+import { useAuth } from '../context/AuthContext';
 
 const Header = () => {
+
+    const { isUserLogged, logout } = useAuth();
+    const navigate = useNavigate();
+
+    const handleLogout = () => {
+        logout();
+        navigate('/')
+    }
+
     return (
         <div>
             <AppBar position="static">
@@ -31,15 +41,27 @@ const Header = () => {
                                 Contacto
                             </Button>
                         </Link>
+                        <Link hidden={!isUserLogged} to='/panel'>
+                            <Button
+                                sx={{ my: 2, marginRight: 3, color: 'white', display: 'block', border: 2 }}>
+                                Panel Admin.
+                            </Button>
+                        </Link>
                         <span style={{ marginTop: 15 }}>
                             <Cart></Cart>
                         </span>
                     </Box>
                     <IconButton color="inherit" aria-label="Admin Access">
                         <Typography variant="body1" sx={{ pr: 1 }}>
-                            <Link to='/panel'>
-                                Acceso Admin
-                            </Link>
+                            {!isUserLogged ?
+                                <Link to='/panel'>
+                                    Acceso Admin
+                                </Link>
+                                :
+                                <Link onClick={handleLogout}>
+                                    Cerrar Sesión
+                                </Link>
+                            }
                         </Typography>
                     </IconButton>
                 </Toolbar>
