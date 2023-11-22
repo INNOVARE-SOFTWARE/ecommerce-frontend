@@ -1,24 +1,14 @@
 import { useEffect, useState } from 'react';
-<<<<<<< HEAD
 import { Skeleton, Box } from "@mui/material";
 import Button from '@mui/material/Button';
-=======
-import { TextField, Box, Button } from "@mui/material";
->>>>>>> 0171aa5f9d2f58ee29c0fb3d7094a610868a27b4
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-<<<<<<< HEAD
 import { TextField, AppBar, Container, IconButton, Toolbar, Typography } from '@mui/material';
 import { createProduct } from '../api/products.api';
 
-=======
-import { createProduct } from '../api/products.api';
-
-
->>>>>>> 0171aa5f9d2f58ee29c0fb3d7094a610868a27b4
 function FormProduct(props) {
     const [open, setOpen] = useState(false);
     const [product, setProduct] = useState({
@@ -32,17 +22,12 @@ function FormProduct(props) {
 
     const handleClickOpen = () => {
         setOpen(true);
-<<<<<<< HEAD
     };
-=======
-    }
->>>>>>> 0171aa5f9d2f58ee29c0fb3d7094a610868a27b4
 
     const handleClose = () => {
         setOpen(false);
     };
 
-<<<<<<< HEAD
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -54,13 +39,11 @@ function FormProduct(props) {
         }).catch((error) => {
             alert(error);
             setOpen(false);
-        });  
-      
+        });
+
     }
 
 
-=======
->>>>>>> 0171aa5f9d2f58ee29c0fb3d7094a610868a27b4
     const handleChange = (e) => {
         const { name, value } = e.target;
         setProduct({
@@ -69,23 +52,6 @@ function FormProduct(props) {
         });
     };
 
-<<<<<<< HEAD
-=======
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        
-        createProduct(product).then((response) => {
-            if (response.data) {
-                setOpen(false);
-                props.fetchData()
-            }
-        }).catch((error) => {
-            alert(error);
-            setOpen(false);
-        });
-
-    };
->>>>>>> 0171aa5f9d2f58ee29c0fb3d7094a610868a27b4
 
     return (
         <Box>
@@ -97,10 +63,6 @@ function FormProduct(props) {
                 onClose={handleClose}
             >
                 <form onSubmit={handleSubmit}>
-<<<<<<< HEAD
-=======
-
->>>>>>> 0171aa5f9d2f58ee29c0fb3d7094a610868a27b4
                     <DialogTitle id="alert-dialog-title">
                         {"Crear nuevo Producto"}
                     </DialogTitle>
@@ -158,15 +120,9 @@ function FormProduct(props) {
                 </form>
             </Dialog>
         </Box>
-<<<<<<< HEAD
     );
 }
 
 export default FormProduct;
 
 
-=======
-    )
-}
-export default FormProduct;
->>>>>>> 0171aa5f9d2f58ee29c0fb3d7094a610868a27b4
