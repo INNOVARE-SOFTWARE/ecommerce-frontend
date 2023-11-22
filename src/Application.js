@@ -5,6 +5,7 @@ import Header from './components/Header'
 import FaqPage from "./pages/FaqPage";
 import ContactPage from "./pages/ContactPage";
 import { CartProvider } from "./context/CartContext";
+import HomePagePanel from './pages/panel/PanelPage'
 
 import HomePagePanel from './pages/panel/PanelPage'
 
@@ -16,6 +17,7 @@ function Application() {
                 <Header></Header>
                 <Routes>
                     <Route path="/" element={<HomePage />} />
+                    <Route path="/panel" element={<HomePagePanel />} />
                     <Route path="/terms" element={<FaqPage />} />
                     <Route path="/contact" element={<ContactPage />} />
                     <Route path="/panel" element={<HomePagePanel />} />

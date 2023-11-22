@@ -7,5 +7,6 @@ export const getAllProducts = (searchTerm) => {
 };
 
 export const createProduct = (product) => {
-    return axios.post(`${BASE_URL}/products`,product);
+    return axios.post(`${BASE_URL}/products`, product);
 };
+
