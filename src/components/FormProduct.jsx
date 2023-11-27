@@ -5,11 +5,11 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
-import { createProduct } from '../api/products.api';
+import { createProduct, updateProduct } from '../api/products.api';
 
 
 function FormProduct(props) {
-    const [open, setOpen] = useState(false);
+
     const [product, setProduct] = useState({
         name: '',
         catalog: '',
@@ -19,13 +19,10 @@ function FormProduct(props) {
         stock: 0
     });
 
-    const handleClickOpen = () => {
-        setOpen(true);
-    }
+    useEffect(() => {
+        setProduct(props.product)
+    }, [props.product]);
 
-    const handleClose = () => {
-        setOpen(false);
-    };
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -37,27 +34,39 @@ function FormProduct(props) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        
-        createProduct(product).then((response) => {
-            if (response.data) {
-                setOpen(false);
-                props.fetchData()
-            }
-        }).catch((error) => {
-            alert(error);
-            setOpen(false);
-        });
 
+        if (product._id !== undefined) {
+            updateProduct(product._id, product).then((response) => {
+                if (response.data) {
+                    props.handleClose();
+                    props.fetchData()
+                }
+            }).catch((error) => {
+                alert(error);
+                props.handleClose();
+            });
+        } else {
+            createProduct(product).then((response) => {
+                if (response.data) {
+                    props.handleClose();
+                    props.fetchData()
+                }
+            }).catch((error) => {
+                alert(error);
+                props.handleClose();
+            });
+        }
     };
+
 
     return (
         <Box>
-            <Button variant="outlined" onClick={handleClickOpen}>
+            <Button variant="outlined" onClick={props.handleClickOpen}>
                 Nuevo Producto
             </Button>
             <Dialog
-                open={open}
-                onClose={handleClose}
+                open={props.open}
+                onClose={props.handleClose}
             >
                 <form onSubmit={handleSubmit}>
 
@@ -110,7 +119,7 @@ function FormProduct(props) {
 
                     </DialogContent>
                     <DialogActions>
-                        <Button onClick={handleClose}>Cancelar</Button>
+                        <Button onClick={props.handleClose}>Cancelar</Button>
                         <Button type='submit' autoFocus>
                             Guardar
                         </Button>
