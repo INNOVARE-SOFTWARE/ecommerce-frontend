@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { TextField, Button, AppBar, Container, IconButton, Toolbar, Typography } from '@mui/material';
+import emailjs from 'emailjs-com';
 
 const ContactPage = () => {
     const [contact, setContact] = useState({
@@ -10,8 +11,15 @@ const ContactPage = () => {
     });
 
 
-    const handleSubmit = () => {
-      
+    const handleSubmit = (e) => {
+        e.preventDefault();  
+
+        emailjs.sendForm('service_vd4fhry', 'template_vucohr5', e.target, '1kJkddVlofxdGh33o')
+            .then((result) => {
+                window.location.reload()  //This is if you still want the page to reload (since e.preventDefault() cancelled that behavior) 
+            }, (error) => {
+                console.log(error.text);
+            });
     }
 
 
