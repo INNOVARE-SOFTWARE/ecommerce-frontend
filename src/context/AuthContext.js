@@ -7,15 +7,18 @@ export const useAuth = () => {
     return useContext(AuthContext);
 }
 
+
 export const AuthProvider = ({ children }) => {
-    const [isUserLogged, setUserLogged] = useState(false);
+    const [isUserLogged, setUserLogged] = useState()
+
     const login = (token) => {
         if (token) {
-            setUserLogged(true);
+            setUserLogged(true)
         }
     }
+
     const logout = () => {
-        setUserLogged(false);
+        setUserLogged(false)
         localStorage.removeItem('token');
     }
 
@@ -23,6 +26,5 @@ export const AuthProvider = ({ children }) => {
         <AuthContext.Provider value={{ isUserLogged, login, logout }}>
             {children}
         </AuthContext.Provider>
-    )
-
+    );
 }

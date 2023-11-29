@@ -6,11 +6,12 @@ import FaqPage from "./pages/FaqPage";
 import ContactPage from "./pages/ContactPage";
 import { CartProvider } from "./context/CartContext";
 import HomePagePanel from './pages/panel/PanelPage'
-import { AuthProvider } from "./context/AuthContext";
 import Login from "./pages/LoginPage";
 import PrivateRoute from "./components/PrivateRoute";
+import { AuthProvider } from "./context/AuthContext";
 
 function Application() {
+    
     return (
         <div>
             <CartProvider>
