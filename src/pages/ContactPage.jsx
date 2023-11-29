@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { TextField, Button, AppBar, Container, IconButton, Toolbar, Typography } from '@mui/material';
+import { TextField, Button, Snackbar, Container, Alert, Toolbar, Typography } from '@mui/material';
 import emailjs from 'emailjs-com';
 
 const ContactPage = () => {
@@ -9,10 +9,13 @@ const ContactPage = () => {
         email: '',
         message: ''
     });
+    const [open, setOpen] = useState(false);
 
+    const handleClose = () => {
+        setOpen(false);
+    };
 
     const handleSubmit = (e) => {
-        e.preventDefault();  
 
         emailjs.sendForm('service_vd4fhry', 'template_vucohr5', e.target, '1kJkddVlofxdGh33o')
             .then((result) => {
@@ -20,6 +23,10 @@ const ContactPage = () => {
             }, (error) => {
                 console.log(error.text);
             });
+
+        setOpen(true)
+        e.preventDefault()
+
     }
 
 
@@ -72,6 +79,11 @@ const ContactPage = () => {
                     Enviar
                 </Button>
             </form>
+            <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
+                <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
+                    Mensaje Enviado!
+                </Alert>
+            </Snackbar>
         </Container>
     );
 };
