@@ -1,17 +1,42 @@
 import { useEffect, useState } from 'react';
-import { TextField, Button, AppBar, Container, IconButton, Toolbar, Typography } from '@mui/material';
+import { TextField, Button, Alert, Container, Snackbar, Toolbar, Typography } from '@mui/material';
+import emailjs from 'emailjs-com';
 
 const ContactPage = () => {
     const [contact, setContact] = useState({
         name: '',
-        lastanme: '',
+        lastname: '',
         email: '',
         message: ''
     });
+    const [open, setOpen] = useState(false);
+    const handleClose = () => {
+        setOpen(false);
+    }
 
-
-    const handleSubmit = () => {
-      
+    const handleSubmit = (e) => {
+        // primer param: serviceID
+        // segundo param: templateID
+        // tercer param: formulario
+        // cuarto param: Public Key
+        emailjs.sendForm(
+            'service_vd4fhry',
+            'template_vucohr5',
+            e.target,
+            '1kJkddVlofxdGh33o').then((result) => {
+                if (result.text === 'OK') {
+                    setOpen(true)
+                    setContact({
+                        name: '',
+                        lastname: '',
+                        email: '',
+                        message: ''
+                    });
+                }
+            }, (error) => {
+                console.log(error.text);
+            });
+        e.preventDefault() //?
     }
 
 
@@ -38,8 +63,8 @@ const ContactPage = () => {
                 <TextField fullWidth
                     label="Apellido"
                     margin="normal"
-                    name="lastanme"
-                    value={contact.lastanme}
+                    name="lastname"
+                    value={contact.lastname}
                     onChange={handleChange}
                     required
                 />
@@ -63,6 +88,11 @@ const ContactPage = () => {
                 <Button variant='contained' type="submit" sx={{ mt: 2 }}>
                     Enviar
                 </Button>
+                <Snackbar anchorOrigin={{ vertical: 'top', horizontal: 'center' }} open={open} autoHideDuration={6000} onClose={handleClose}>
+                    <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
+                        Mensaje Enviado!
+                    </Alert>
+                </Snackbar>
             </form>
         </Container>
     );

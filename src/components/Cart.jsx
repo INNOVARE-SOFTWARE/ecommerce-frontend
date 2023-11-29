@@ -3,6 +3,7 @@ import { IconButton, Badge, Popover, Paper, Typography, List, ListItem, ListItem
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useCart } from '../context/CartContext';
+import emailjs from 'emailjs-com';
 
 const Cart = () => {
     const [anchorEl, setAnchorEl] = useState(null);
@@ -15,7 +16,7 @@ const Cart = () => {
     };
 
     const handleCartClose = () => {
-        setAnchorEl(null); 
+        setAnchorEl(null);
     };
 
     const handleRemoveItem = (item) => {
@@ -25,8 +26,19 @@ const Cart = () => {
 
     const handleCheckout = () => {
         // Aca la logica seria simplemente editar un articulo en la db y decrementarle el stock. posterior a eso limpiar carrito
-        alert('Checkout successful!');
-        handleCartClose();
+        //alert('Checkout successful!');
+        emailjs.send(
+            'service_vd4fhry',
+            'template_vucohr5',
+            JSON.stringify(cart),
+            '1kJkddVlofxdGh33o').then((result) => {
+                if (result.text === 'OK') {
+                    handleCartClose();
+                }
+            }, (error) => {
+                console.log(error.text);
+            });
+
     };
 
     function calculateTotalPrice(cart) {
