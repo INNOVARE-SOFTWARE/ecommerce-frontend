@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { IconButton, Badge, Popover, Paper, Typography, List, ListItem, ListItemText, ListItemAvatar, Avatar, Button } from '@mui/material';
+import { IconButton, Badge, Popover, Paper, Typography, List, ListItem, ListItemText, ListItemAvatar, Avatar, Button, Snackbar, Alert } from '@mui/material';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { useCart } from '../context/CartContext';
@@ -8,8 +8,12 @@ import emailjs from 'emailjs-com';
 const Cart = () => {
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
-    const { cart, removeFromCart } = useCart();
+    const { cart, removeFromCart, resetCart } = useCart();
     const total = calculateTotalPrice(cart);
+    const [openAlert, setOpenAlert] = useState(false);
+    const handleCloseAlert = () => {
+        setOpenAlert(false);
+    }
 
     const handleCartClick = (event) => {
         setAnchorEl(event.currentTarget);
@@ -25,14 +29,25 @@ const Cart = () => {
     };
 
     const handleCheckout = () => {
-        // Aca la logica seria simplemente editar un articulo en la db y decrementarle el stock. posterior a eso limpiar carrito
-        //alert('Checkout successful!');
+        let str = "";
+        cart.map((item) => {
+            str += `${item.product.name}, cantidad: ${item.quantity ? item.quantity : 1}, precio unitario: $${item.product.price} \n`;
+        });
+
+        let template = {
+            to_email: 'agustinimarcelo@gmail.com',
+            subject: 'Nuevo pedido',
+            str: str
+        }
+
         emailjs.send(
             'service_vd4fhry',
-            'template_vucohr5',
-            JSON.stringify(cart),
+            'template_gpz2eas',
+            template,
             '1kJkddVlofxdGh33o').then((result) => {
                 if (result.text === 'OK') {
+                    setOpenAlert(true)
+                    resetCart();
                     handleCartClose();
                 }
             }, (error) => {
@@ -56,56 +71,64 @@ const Cart = () => {
                     <ShoppingCartIcon />
                 </IconButton>
             </Badge>
-            <Popover
-                open={open}
-                anchorEl={anchorEl}
-                onClose={handleCartClose}
-                anchorOrigin={{
-                    vertical: 'bottom',
-                    horizontal: 'right',
-                }}
-                transformOrigin={{
-                    vertical: 'top',
-                    horizontal: 'right',
-                }}
-            >
-                <Paper sx={{ padding: 2 }}>
-                    <Typography variant="h6" gutterBottom>
-                        Mi Carrito de compras
-                    </Typography>
-                    {cart.length > 0 ? (
-                        <>
-                            <List>
-                                {cart.map((item, index) => (
-                                    <ListItem key={index}>
-                                        <ListItemAvatar>
-                                            <Avatar alt="Product Image" src={item.product.image} />
-                                        </ListItemAvatar>
-                                        <ListItemText primary={`${item.product.name} (Cant.: ${item.quantity})`} secondary={item.product.price ? `$${item.product.price.toFixed(2)}` : ''} />
-                                        <IconButton
-                                            color="error"
-                                            aria-label="Delete"
-                                            onClick={() => handleRemoveItem(item)}
-                                        >
-                                            <DeleteIcon />
-                                        </IconButton>
-                                    </ListItem>
-                                ))}
-                            </List>
-                            <Typography variant="h6" sx={{ textAlign: 'right' }}>
-                                Total Carrito: ${total.toFixed(2)}
-                            </Typography>
-                            <div style={{ display: 'flex', justifyContent: 'center' }}>
-                                <Button variant="contained" color="primary" onClick={handleCheckout}>
-                                    Checkout
-                                </Button>
-                            </div>
-                        </>
-                    ) : (
-                        <Typography variant="body2">Su carrito está vacío.</Typography>
-                    )}
-                </Paper>
-            </Popover>
+            <>
+                <Popover
+                    open={open}
+                    anchorEl={anchorEl}
+                    onClose={handleCartClose}
+                    anchorOrigin={{
+                        vertical: 'bottom',
+                        horizontal: 'right',
+                    }}
+                    transformOrigin={{
+                        vertical: 'top',
+                        horizontal: 'right',
+                    }}
+                >
+                    <Paper sx={{ padding: 2 }}>
+                        <Typography variant="h6" gutterBottom>
+                            Mi Carrito de compras
+                        </Typography>
+                        {cart.length > 0 ? (
+                            <>
+                                <List>
+                                    {cart.map((item, index) => (
+                                        <ListItem key={index}>
+                                            <ListItemAvatar>
+                                                <Avatar alt="Product Image" src={item.product.image} />
+                                            </ListItemAvatar>
+                                            <ListItemText primary={`${item.product.name} (Cant.: ${item.quantity})`} secondary={item.product.price ? `$${item.product.price.toFixed(2)}` : ''} />
+                                            <IconButton
+                                                color="error"
+                                                aria-label="Delete"
+                                                onClick={() => handleRemoveItem(item)}
+                                            >
+                                                <DeleteIcon />
+                                            </IconButton>
+                                        </ListItem>
+                                    ))}
+                                </List>
+                                <Typography variant="h6" sx={{ textAlign: 'right' }}>
+                                    Total Carrito: ${total.toFixed(2)}
+                                </Typography>
+                                <div style={{ display: 'flex', justifyContent: 'center' }}>
+                                    <Button variant="contained" color="primary" onClick={handleCheckout}>
+                                        Checkout
+                                    </Button>
+                                </div>
+                            </>
+                        ) : (
+                            <Typography variant="body2">Su carrito está vacío.</Typography>
+                        )}
+                    </Paper>
+
+                </Popover>
+                <Snackbar anchorOrigin={{ vertical: 'top', horizontal: 'center' }} open={openAlert} autoHideDuration={6000} onClose={handleCloseAlert}>
+                    <Alert onClose={handleCloseAlert} severity="success" sx={{ width: '100%' }}>
+                        Pedido Enviado!
+                    </Alert>
+                </Snackbar>
+            </>
         </div>
     )
 }
